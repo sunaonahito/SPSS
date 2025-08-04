@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シングルマザー向けプレイフル状態測定尺度（SPSS）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', 'メイリオ', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .instructions {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .factor-section {
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .factor-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .question {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #444;
+            font-size: 1rem;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .option {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .option input[type="radio"] {
+            display: none;
+        }
+
+        .option label {
+            display: block;
+            padding: 10px 8px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            color: white;
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .option label:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .results {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results h2 {
+            color: #2d5016;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .score-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .score-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .total-score {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .total-score h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .total-score .score-value {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .interpretation {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 10px;
+            line-height: 1.8;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .text-input::placeholder {
+            color: #999;
+        }
+
+        .advice-section {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .advice-section h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .advice-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .advice-list li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .advice-list li::before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        .report-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .options {
+                flex-direction: column;
+            }
+            
+            .option {
+                min-width: auto;
+            }
+            
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>シングルマザー向けプレイフル状態測定尺度</h1>
+            <p>Single Mother Playful States Scale (SPSS)</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="content">
+            <!-- 個人情報入力セクション -->
+            <div class="factor-section">
+                <div class="factor-header">基本情報</div>
+                <div class="question">
+                    <div class="question-text">お名前</div>
+                    <input type="text" id="userName" class="text-input" placeholder="お名前をご入力ください" required>
+                </div>
+                <div class="question">
+                    <div class="question-text">年齢</div>
+                    <input type="number" id="userAge" class="text-input" placeholder="年齢をご入力ください" min="18" max="80" required>
+                </div>
+                <div class="question">
+                    <div class="question-text">性別</div>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="gender_female" name="gender" value="女性">
+                            <label for="gender_female">女性</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="gender_male" name="gender" value="男性">
+                            <label for="gender_male">男性</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="gender_other" name="gender" value="その他">
+                            <label for="gender_other">その他</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="gender_prefer_not" name="gender" value="回答しない">
+                            <label for="gender_prefer_not">回答しない</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <strong>回答方法：</strong><br>
+                ここ1週間程度のあなたの状態や体験について、以下の項目がどの程度あてはまるかをお選びください。
+                正解・不正解はありませんので、素直にお答えください。
+            </div>
+
+            <div id="statusMessage" class="status-message">
+                基本情報と質問にご回答ください
+            </div>
+
+            <form id="surveyForm">
+                <!-- 因子1：日常の楽しさ発見 -->
+                <div class="factor-section">
+                    <div class="factor-header">日常の楽しさ発見</div>
+                    
+                    <div class="question">
+                        <div class="question-text">1. 家事や育児の中で、ちょっとした楽しみを見つけることができた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q1_1" name="q1" value="1">
+                                <label for="q1_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1_2" name="q1" value="2">
+                                <label for="q1_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1_3" name="q1" value="3">
+                                <label for="q1_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1_4" name="q1" value="4">
+                                <label for="q1_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1_5" name="q1" value="5">
+                                <label for="q1_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">2. いつものルーティンの中に、新鮮さや面白さを感じることがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q2_1" name="q2" value="1">
+                                <label for="q2_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2_2" name="q2" value="2">
+                                <label for="q2_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2_3" name="q2" value="3">
+                                <label for="q2_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2_4" name="q2" value="4">
+                                <label for="q2_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2_5" name="q2" value="5">
+                                <label for="q2_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">3. 忙しい毎日でも、心から「楽しい」と感じる瞬間があった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q3_1" name="q3" value="1">
+                                <label for="q3_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3_2" name="q3" value="2">
+                                <label for="q3_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3_3" name="q3" value="3">
+                                <label for="q3_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3_4" name="q3" value="4">
+                                <label for="q3_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3_5" name="q3" value="5">
+                                <label for="q3_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">4. 些細なことでも、喜びを感じることができた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q4_1" name="q4" value="1">
+                                <label for="q4_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4_2" name="q4" value="2">
+                                <label for="q4_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4_3" name="q4" value="3">
+                                <label for="q4_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4_4" name="q4" value="4">
+                                <label for="q4_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4_5" name="q4" value="5">
+                                <label for="q4_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">5. 単調に思える日常の中で、ワクワクすることを見つけられた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q5_1" name="q5" value="1">
+                                <label for="q5_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5_2" name="q5" value="2">
+                                <label for="q5_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5_3" name="q5" value="3">
+                                <label for="q5_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5_4" name="q5" value="4">
+                                <label for="q5_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5_5" name="q5" value="5">
+                                <label for="q5_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">6. 疲れていても、何かを楽しいと感じることがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q6_1" name="q6" value="1">
+                                <label for="q6_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q6_2" name="q6" value="2">
+                                <label for="q6_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q6_3" name="q6" value="3">
+                                <label for="q6_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q6_4" name="q6" value="4">
+                                <label for="q6_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q6_5" name="q6" value="5">
+                                <label for="q6_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 因子2：自由感・解放感 -->
+                <div class="factor-section">
+                    <div class="factor-header">自由感・解放感</div>
+                    
+                    <div class="question">
+                        <div class="question-text">7. 自分らしくいられる時間を持つことができた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q7_1" name="q7" value="1">
+                                <label for="q7_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q7_2" name="q7" value="2">
+                                <label for="q7_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q7_3" name="q7" value="3">
+                                <label for="q7_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q7_4" name="q7" value="4">
+                                <label for="q7_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q7_5" name="q7" value="5">
+                                <label for="q7_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">8. 「母親」という役割から離れて、一人の人間として自由を感じることがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q8_1" name="q8" value="1">
+                                <label for="q8_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q8_2" name="q8" value="2">
+                                <label for="q8_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q8_3" name="q8" value="3">
+                                <label for="q8_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q8_4" name="q8" value="4">
+                                <label for="q8_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q8_5" name="q8" value="5">
+                                <label for="q8_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">9. やらなければならないことを忘れて、好きなことに没頭できた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q9_1" name="q9" value="1">
+                                <label for="q9_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q9_2" name="q9" value="2">
+                                <label for="q9_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q9_3" name="q9" value="3">
+                                <label for="q9_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q9_4" name="q9" value="4">
+                                <label for="q9_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q9_5" name="q9" value="5">
+                                <label for="q9_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">10. 周りの目を気にせず、思いのままに行動できる瞬間があった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q10_1" name="q10" value="1">
+                                <label for="q10_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q10_2" name="q10" value="2">
+                                <label for="q10_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q10_3" name="q10" value="3">
+                                <label for="q10_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q10_4" name="q10" value="4">
+                                <label for="q10_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q10_5" name="q10" value="5">
+                                <label for="q10_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">11. 心の中で「解放された」と感じることがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q11_1" name="q11" value="1">
+                                <label for="q11_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q11_2" name="q11" value="2">
+                                <label for="q11_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q11_3" name="q11" value="3">
+                                <label for="q11_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q11_4" name="q11" value="4">
+                                <label for="q11_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q11_5" name="q11" value="5">
+                                <label for="q11_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 因子3：創造的・自発的活動 -->
+                <div class="factor-section">
+                    <div class="factor-header">創造的・自発的活動</div>
+                    
+                    <div class="question">
+                        <div class="question-text">12. 思いついたアイデアを、実際に試してみることがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q12_1" name="q12" value="1">
+                                <label for="q12_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q12_2" name="q12" value="2">
+                                <label for="q12_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q12_3" name="q12" value="3">
+                                <label for="q12_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q12_4" name="q12" value="4">
+                                <label for="q12_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q12_5" name="q12" value="5">
+                                <label for="q12_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">13. 計画にはなかったことを、その場のひらめきで実行した</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q13_1" name="q13" value="1">
+                                <label for="q13_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q13_2" name="q13" value="2">
+                                <label for="q13_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q13_3" name="q13" value="3">
+                                <label for="q13_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q13_4" name="q13" value="4">
+                                <label for="q13_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q13_5" name="q13" value="5">
+                                <label for="q13_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">14. 新しいやり方や工夫を思いついて、試してみた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q14_1" name="q14" value="1">
+                                <label for="q14_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q14_2" name="q14" value="2">
+                                <label for="q14_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q14_3" name="q14" value="3">
+                                <label for="q14_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q14_4" name="q14" value="4">
+                                <label for="q14_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q14_5" name="q14" value="5">
+                                <label for="q14_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">15. 「こんなことをしてみたい」と思ったことを、実際にやってみた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q15_1" name="q15" value="1">
+                                <label for="q15_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q15_2" name="q15" value="2">
+                                <label for="q15_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q15_3" name="q15" value="3">
+                                <label for="q15_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q15_4" name="q15" value="4">
+                                <label for="q15_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q15_5" name="q15" value="5">
+                                <label for="q15_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">16. いつもとは違うことに挑戦してみたいという気持ちになった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q16_1" name="q16" value="1">
+                                <label for="q16_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q16_2" name="q16" value="2">
+                                <label for="q16_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q16_3" name="q16" value="3">
+                                <label for="q16_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q16_4" name="q16" value="4">
+                                <label for="q16_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q16_5" name="q16" value="5">
+                                <label for="q16_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 因子4：子どもとのプレイフル交流 -->
+                <div class="factor-section">
+                    <div class="factor-header">子どもとのプレイフル交流</div>
+                    
+                    <div class="question">
+                        <div class="question-text">17. 子どもと一緒に、心から楽しい時間を過ごすことができた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q17_1" name="q17" value="1">
+                                <label for="q17_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q17_2" name="q17" value="2">
+                                <label for="q17_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q17_3" name="q17" value="3">
+                                <label for="q17_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q17_4" name="q17" value="4">
+                                <label for="q17_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q17_5" name="q17" value="5">
+                                <label for="q17_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">18. 子どもと遊んでいる時に、自分も童心に返って楽しめた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q18_1" name="q18" value="1">
+                                <label for="q18_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q18_2" name="q18" value="2">
+                                <label for="q18_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q18_3" name="q18" value="3">
+                                <label for="q18_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q18_4" name="q18" value="4">
+                                <label for="q18_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q18_5" name="q18" value="5">
+                                <label for="q18_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">19. 子どもとの何気ない会話や触れ合いの中で、笑顔になることがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q19_1" name="q19" value="1">
+                                <label for="q19_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q19_2" name="q19" value="2">
+                                <label for="q19_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q19_3" name="q19" value="3">
+                                <label for="q19_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q19_4" name="q19" value="4">
+                                <label for="q19_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q19_5" name="q19" value="5">
+                                <label for="q19_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">20. 子どもと一緒に新しい発見や驚きを共有することがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q20_1" name="q20" value="1">
+                                <label for="q20_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q20_2" name="q20" value="2">
+                                <label for="q20_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q20_3" name="q20" value="3">
+                                <label for="q20_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q20_4" name="q20" value="4">
+                                <label for="q20_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q20_5" name="q20" value="5">
+                                <label for="q20_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 因子5：社会的つながりでの楽しさ -->
+                <div class="factor-section">
+                    <div class="factor-header">社会的つながりでの楽しさ</div>
+                    
+                    <div class="question">
+                        <div class="question-text">21. 友人や知り合いとの会話で、心から笑うことがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q21_1" name="q21" value="1">
+                                <label for="q21_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q21_2" name="q21" value="2">
+                                <label for="q21_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q21_3" name="q21" value="3">
+                                <label for="q21_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q21_4" name="q21" value="4">
+                                <label for="q21_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q21_5" name="q21" value="5">
+                                <label for="q21_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">22. 他の人と一緒にいる時に、楽しい気持ちを共有できた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q22_1" name="q22" value="1">
+                                <label for="q22_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q22_2" name="q22" value="2">
+                                <label for="q22_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q22_3" name="q22" value="3">
+                                <label for="q22_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q22_4" name="q22" value="4">
+                                <label for="q22_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q22_5" name="q22" value="5">
+                                <label for="q22_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">23. ママ友や近所の人との交流の中で、リラックスして楽しめた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q23_1" name="q23" value="1">
+                                <label for="q23_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q23_2" name="q23" value="2">
+                                <label for="q23_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q23_3" name="q23" value="3">
+                                <label for="q23_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q23_4" name="q23" value="4">
+                                <label for="q23_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q23_5" name="q23" value="5">
+                                <label for="q23_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">24. SNSやオンラインでのやり取りで、楽しい気分になることがあった</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q24_1" name="q24" value="1">
+                                <label for="q24_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q24_2" name="q24" value="2">
+                                <label for="q24_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q24_3" name="q24" value="3">
+                                <label for="q24_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q24_4" name="q24" value="4">
+                                <label for="q24_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q24_5" name="q24" value="5">
+                                <label for="q24_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">25. 誰かと一緒に何かをする中で、ワクワクする気持ちを感じた</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q25_1" name="q25" value="1">
+                                <label for="q25_1">全く<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q25_2" name="q25" value="2">
+                                <label for="q25_2">あまり<br>あてはまらない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q25_3" name="q25" value="3">
+                                <label for="q25_3">どちらでも<br>ない</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q25_4" name="q25" value="4">
+                                <label for="q25_4">やや<br>あてはまる</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q25_5" name="q25" value="5">
+                                <label for="q25_5">とてもよく<br>あてはまる</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- 結果表示セクション -->
+            <div class="results" id="results">
+                <h2>🌟 あなたのプレイフルネス結果</h2>
+                
+                <div class="advice-section">
+                    <h4>👤 測定者情報</h4>
+                    <p id="personalInfoDisplay"></p>
+                </div>
+                
+                <div class="total-score">
+                    <h3>総合スコア</h3>
+                    <div class="score-value" id="totalScore">0.0</div>
+                    <div class="score-bar">
+                        <div class="score-bar-fill" id="totalScoreBar"></div>
+                    </div>
+                </div>
+
+                <div class="score-grid">
+                    <div class="score-card">
+                        <h3>日常の楽しさ発見</h3>
+                        <div class="score-value" id="factor1Score">0.0</div>
+                        <div class="score-bar">
+                            <div class="score-bar-fill" id="factor1Bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="score-card">
+                        <h3>自由感・解放感</h3>
+                        <div class="score-value" id="factor2Score">0.0</div>
+                        <div class="score-bar">
+                            <div class="score-bar-fill" id="factor2Bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="score-card">
+                        <h3>創造的・自発的活動</h3>
+                        <div class="score-value" id="factor3Score">0.0</div>
+                        <div class="score-bar">
+                            <div class="score-bar-fill" id="factor3Bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="score-card">
+                        <h3>子どもとのプレイフル交流</h3>
+                        <div class="score-value" id="factor4Score">0.0</div>
+                        <div class="score-bar">
+                            <div class="score-bar-fill" id="factor4Bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="score-card">
+                        <h3>社会的つながりでの楽しさ</h3>
+                        <div class="score-value" id="factor5Score">0.0</div>
+                        <div class="score-bar">
+                            <div class="score-bar-fill" id="factor5Bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interpretation" id="interpretationText">
+                    <!-- 解釈内容がここに挿入されます -->
+                </div>
+
+                <div class="report-actions">
+                    <button class="action-btn" onclick="printReport()">🖨️ 結果を印刷</button>
+                    <button class="action-btn" onclick="copyReport()">📋 結果をコピー</button>
+                    <button class="action-btn" onclick="window.location.reload()">🔄 再テスト</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // グローバル変数
+        let scores = null;
+        let answeredCount = 0;
+        let personalInfo = {};
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📱 アプリケーション開始');
+            
+            // ラジオボタンの変更監視
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', updateProgress);
+            });
+            
+            // テキスト入力の変更監視
+            document.getElementById('userName').addEventListener('input', updateProgress);
+            document.getElementById('userAge').addEventListener('input', updateProgress);
+            
+            updateProgress();
+        });
+
+        // 進行状況更新
+        function updateProgress() {
+            answeredCount = 0;
+            
+            // 個人情報の入力チェック
+            const userName = document.getElementById('userName').value.trim();
+            const userAge = document.getElementById('userAge').value;
+            const userGender = document.querySelector('input[name="gender"]:checked');
+            
+            const personalInfoComplete = userName && userAge && userGender;
+            
+            // 回答数カウント
+            for (let i = 1; i <= 25; i++) {
+                if (document.querySelector(`input[name="q${i}"]:checked`)) {
+                    answeredCount++;
+                }
+            }
+            
+            // 進行状況バー更新（個人情報 + 25問 = 28項目）
+            const totalItems = 28;
+            const completedItems = (personalInfoComplete ? 3 : 0) + answeredCount;
+            const progress = (completedItems / totalItems) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // ステータスメッセージ更新
+            const statusMsg = document.getElementById('statusMessage');
+            if (personalInfoComplete && answeredCount === 25) {
+                statusMsg.textContent = '🎉 回答完了！結果を計算中...';
+                statusMsg.style.color = '#28a745';
+                
+                // 個人情報を保存
+                personalInfo = {
+                    name: userName,
+                    age: parseInt(userAge),
+                    gender: userGender.value
+                };
+                
+                // 0.5秒後に結果表示
+                setTimeout(showResults, 500);
+            } else if (!personalInfoComplete) {
+                statusMsg.textContent = '基本情報をご入力ください';
+                statusMsg.style.color = '#666';
+            } else {
+                statusMsg.textContent = `質問に回答してください (${answeredCount}/25)`;
+                statusMsg.style.color = '#666';
+            }
+        }
+
+        // 結果表示
+        function showResults() {
+            console.log('📊 結果計算開始');
+            
+            // 回答データ収集
+            const responses = {};
+            for (let i = 1; i <= 25; i++) {
+                const checked = document.querySelector(`input[name="q${i}"]:checked`);
+                if (checked) {
+                    responses[`q${i}`] = parseInt(checked.value);
+                }
+            }
+            
+            // スコア計算
+            scores = calculateScores(responses);
+            console.log('💯 スコア計算完了:', scores);
+            
+            // 結果表示
+            displayResults(scores);
+            
+            // 結果セクション表示
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            
+            console.log('✅ 結果表示完了');
+        }
+
+        // スコア計算
+        function calculateScores(responses) {
+            const factors = {
+                factor1: [1, 2, 3, 4, 5, 6],        // 日常の楽しさ発見
+                factor2: [7, 8, 9, 10, 11],         // 自由感・解放感
+                factor3: [12, 13, 14, 15, 16],      // 創造的・自発的活動
+                factor4: [17, 18, 19, 20],          // 子どもとのプレイフル交流
+                factor5: [21, 22, 23, 24, 25]       // 社会的つながりでの楽しさ
+            };
+            
+            const scores = {};
+            
+            // 各因子のスコア計算
+            for (const [factorName, items] of Object.entries(factors)) {
+                let sum = 0;
+                for (const item of items) {
+                    sum += responses[`q${item}`];
+                }
+                scores[factorName] = sum / items.length;
+            }
+            
+            // 総合スコア計算
+            scores.total = (scores.factor1 + scores.factor2 + scores.factor3 + scores.factor4 + scores.factor5) / 5;
+            
+            return scores;
+        }
+
+        // 結果表示
+        function displayResults(scores) {
+            // 個人情報表示
+            const personalInfoText = `<strong>お名前:</strong> ${personalInfo.name} さん<br><strong>年齢:</strong> ${personalInfo.age}歳<br><strong>性別:</strong> ${personalInfo.gender}`;
+            document.getElementById('personalInfoDisplay').innerHTML = personalInfoText;
+            
+            // スコア表示
+            document.getElementById('totalScore').textContent = scores.total.toFixed(1);
+            document.getElementById('factor1Score').textContent = scores.factor1.toFixed(1);
+            document.getElementById('factor2Score').textContent = scores.factor2.toFixed(1);
+            document.getElementById('factor3Score').textContent = scores.factor3.toFixed(1);
+            document.getElementById('factor4Score').textContent = scores.factor4.toFixed(1);
+            document.getElementById('factor5Score').textContent = scores.factor5.toFixed(1);
+            
+            // プログレスバー更新
+            setTimeout(() => {
+                document.getElementById('totalScoreBar').style.width = (scores.total / 5 * 100) + '%';
+                document.getElementById('factor1Bar').style.width = (scores.factor1 / 5 * 100) + '%';
+                document.getElementById('factor2Bar').style.width = (scores.factor2 / 5 * 100) + '%';
+                document.getElementById('factor3Bar').style.width = (scores.factor3 / 5 * 100) + '%';
+                document.getElementById('factor4Bar').style.width = (scores.factor4 / 5 * 100) + '%';
+                document.getElementById('factor5Bar').style.width = (scores.factor5 / 5 * 100) + '%';
+            }, 300);
+            
+            // 解釈テキスト生成
+            const interpretation = generateInterpretation(scores);
+            document.getElementById('interpretationText').innerHTML = interpretation;
+        }
+
+        // 解釈テキスト生成
+        function generateInterpretation(scores) {
+            let html = '';
+            
+            // 総合評価
+            html += '<div class="advice-section">';
+            html += '<h4>📊 総合評価</h4>';
+            if (scores.total >= 4.0) {
+                html += '<p><strong>🌟 とても高いプレイフルネス</strong><br>日常生活の中で豊かなプレイフル体験ができており、心豊かな毎日を送られています。この素晴らしい状態を維持してください。</p>';
+            } else if (scores.total >= 3.0) {
+                html += '<p><strong>✨ 良好なプレイフルネス</strong><br>バランスの取れた状態です。日常に楽しさを見つける力があります。</p>';
+            } else if (scores.total >= 2.0) {
+                html += '<p><strong>🌱 成長の余地あり</strong><br>プレイフル体験を増やすことで、より充実した日常を送れるでしょう。</p>';
+            } else {
+                html += '<p><strong>💪 改善のチャンス</strong><br>日常に楽しさを取り入れることで、生活の質を向上させることができます。</p>';
+            }
+            html += '</div>';
+            
+            // 強みと課題
+            html += '<div class="advice-section">';
+            html += '<h4>💡 あなたの特徴</h4>';
+            
+            const factorNames = {
+                factor1: '日常の楽しさ発見',
+                factor2: '自由感・解放感', 
+                factor3: '創造的・自発的活動',
+                factor4: '子どもとのプレイフル交流',
+                factor5: '社会的つながりでの楽しさ'
+            };
+            
+            // 最高スコアの因子
+            let maxScore = 0;
+            let maxFactor = '';
+            for (const [factor, name] of Object.entries(factorNames)) {
+                if (scores[factor] > maxScore) {
+                    maxScore = scores[factor];
+                    maxFactor = name;
+                }
+            }
+            
+            if (maxScore >= 3.5) {
+                html += `<p><strong>🌟 あなたの強み：${maxFactor}</strong><br>この領域で特に豊かな体験をされています。</p>`;
+            }
+            
+            html += '</div>';
+            
+            // 実践的アドバイス
+            html += '<div class="advice-section">';
+            html += '<h4>🎯 今すぐできること</h4>';
+            html += '<ul class="advice-list">';
+            
+            if (scores.factor1 < 3.0) {
+                html += '<li>朝のコーヒータイムに好きな音楽をかけて、5分だけ自分時間を作る</li>';
+            }
+            if (scores.factor2 < 3.0) {
+                html += '<li>入浴時間を少し長めにとって、リラックスタイムにする</li>';
+            }
+            if (scores.factor3 < 3.0) {
+                html += '<li>料理で新しい調味料や盛り付けを試してみる</li>';
+            }
+            if (scores.factor4 < 3.0) {
+                html += '<li>子どもと一緒に手遊びや歌を楽しむ時間を作る</li>';
+            }
+            if (scores.factor5 < 3.0) {
+                html += '<li>SNSで共感できる投稿にコメントやいいねをする</li>';
+            }
+            
+            html += '<li>完璧を求めすぎず、小さな楽しみを大切にする</li>';
+            html += '</ul>';
+            html += '</div>';
+            
+            return html;
+        }
+
+        // 印刷機能
+        function printReport() {
+            window.print();
+        }
+
+        // コピー機能
+        function copyReport() {
+            const reportText = generateReportText();
+            navigator.clipboard.writeText(reportText).then(() => {
+                alert('📋 結果をコピーしました！');
+            });
+        }
+
+        // レポートテキスト生成
+        function generateReportText() {
+            const today = new Date();
+            const dateString = today.getFullYear() + '年' + (today.getMonth() + 1) + '月' + today.getDate() + '日';
+            
+            let text = '【シングルマザー向けプレイフル状態測定結果】\n\n';
+            text += `測定日：${dateString}\n\n`;
+            text += `■ 測定者情報\n`;
+            text += `お名前：${personalInfo.name} さん\n`;
+            text += `年齢：${personalInfo.age}歳\n`;
+            text += `性別：${personalInfo.gender}\n\n`;
+            text += `■ 総合スコア：${scores.total.toFixed(1)}点\n\n`;
+            text += `■ 各領域スコア\n`;
+            text += `日常の楽しさ発見：${scores.factor1.toFixed(1)}点\n`;
+            text += `自由感・解放感：${scores.factor2.toFixed(1)}点\n`;
+            text += `創造的・自発的活動：${scores.factor3.toFixed(1)}点\n`;
+            text += `子どもとのプレイフル交流：${scores.factor4.toFixed(1)}点\n`;
+            text += `社会的つながりでの楽しさ：${scores.factor5.toFixed(1)}点\n\n`;
+            
+            return text;
+        }
+    </script>
+</body>
+</html>
