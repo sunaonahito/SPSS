@@ -641,9 +641,7 @@
                     <button class="btn btn-nav btn-prev" onclick="previousQuestion()" id="prev-btn" disabled>
                         ← 前へ
                     </button>
-                    <button class="btn btn-nav" onclick="nextQuestion()" id="next-btn" disabled>
-                        次へ →
-                    </button>
+                    
                 </div>
             </div>
         </div>
@@ -755,7 +753,7 @@
         };
 
         // Google Apps Script URL（実際のデプロイメントURLに更新済み）
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzcN9XqupyTirfBxhQENa25NI-cc918GSRctJ3z782L8_QrG3Q7kfJNbs2IGaGyfP4/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxrdX4H7F5hgoQqPJ7qXZ2LsyWdi_TZmMEBOE8m9EA-cad5vYgBlCLiRz2kYSch1N0/exec';
 
         // 通知表示関数
         function showNotification(message, type = 'success') {
@@ -798,7 +796,7 @@
 
         // メールアドレスバリデーション
         function validateEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[\S]+@[\S]+\.[\S]+$/;
             return emailRegex.test(email);
         }
 
@@ -863,7 +861,7 @@
             
             // ナビゲーションボタンの状態更新
             document.getElementById('prev-btn').disabled = index === 0;
-            updateNextButton();
+            
             hideError();
         }
 
@@ -877,36 +875,20 @@
             });
             event.target.classList.add('selected');
             
-            updateNextButton();
             hideError();
+            setTimeout(() => {
+                if (app.currentQuestion < app.totalQuestions - 1) {
+                    app.currentQuestion++;
+                    displayQuestion(app.currentQuestion);
+                } else {
+                    calculateAndShowResults();
+                }
+            }, 300);
         }
 
-        // 次へボタンの状態更新
-        function updateNextButton() {
-            const currentQuestionId = questions[app.currentQuestion].id;
-            const hasAnswer = app.answers[currentQuestionId] !== undefined;
-            const nextBtn = document.getElementById('next-btn');
-            
-            nextBtn.disabled = !hasAnswer;
-            nextBtn.textContent = app.currentQuestion === app.totalQuestions - 1 ? '結果を見る →' : '次へ →';
-        }
+        
 
-        // 次の質問へ
-        function nextQuestion() {
-            const currentQuestionId = questions[app.currentQuestion].id;
-            
-            if (app.answers[currentQuestionId] === undefined) {
-                showError();
-                return;
-            }
-            
-            if (app.currentQuestion < app.totalQuestions - 1) {
-                app.currentQuestion++;
-                displayQuestion(app.currentQuestion);
-            } else {
-                calculateAndShowResults();
-            }
-        }
+        
 
         // 前の質問へ
         function previousQuestion() {
@@ -1079,11 +1061,11 @@
                     "自分らしさを大切にできていて素晴らしいです。その自由な心を保ち続けてくださいね。「母親」という役割から離れて、一人の人間として自分を大切にできているのは貴重な時間です。",
                     "新しいことに挑戦する気持ちが豊かです。その創造性はあなたの大きな強みです。思いついたアイデアを実行に移す行動力は、生活に活力をもたらしています。",
                     "お子さんとの時間を心から楽しめているのは本当に素敵なことです。子どもと一緒に童心に返って楽しめる感性は、親子の絆を深める大切な要素です。",
-                    "人との繋がりの中で喜びを見つけられているのは心の豊かさの表れです。友人や知り合いとの交流で心から笑えることは、精神的な支えになっています。"
+                    "人との繋がりの中で喜びを見つけられているのは心の豊かさの表れです。友人や知り合いとの交流で心から笑えることは、精神的な支えになっています."
                 ];
                 
                 comments.push({
-                    title: `💪 あなたの強み：${factorNames[maxIndex]}`,
+                    title: `💪 あなたの強み：${factorNames[maxIndex]}!`,
                     text: strengthTexts[maxIndex],
                     show: true
                 });
@@ -1109,11 +1091,11 @@
                     "時には「母親の私」ではなく「一人の私」の時間を作ることも大切です。入浴時間を少し長めにとってリラックスしたり、子どもが寝た後の短時間でも自分だけの時間を意識的に持ってみてくださいね。",
                     "新しいことを始めるのは勇気がいりますが、小さな変化から試してみませんか？料理で新しい調味料や盛り付けを試したり、いつもと違う道を歩いてみたり、身近なところから始められます。",
                     "お子さんとの時間に少し疲れを感じているかもしれません。完璧でなくても大丈夫。手遊びや歌を一緒に楽しんだり、お絵描きをしたり、簡単なことから一緒に楽しんでみてください。一緒にいるだけで十分愛情は伝わっています。",
-                    "今は人との繋がりに疲れを感じているかもしれません。無理をせず、SNSで共感できる投稿にコメントやいいねをしたり、近所の人との挨拶から始めてみてください。小さな繋がりから始めて大丈夫です。"
+                    "今は人との繋がりに疲れを感じているかもしれません。無理をせず、SNSで共感できる投稿にコメントやいいねをしたり、近所の人との挨拶から始めてみてください。小さな繋がりから始めて大丈夫です."
                 ];
                 
                 comments.push({
-                    title: `🌱 成長のヒント：${factorNames[minIndex]}`,
+                    title: `🌱 成長のヒント：${factorNames[minIndex]}!`,
                     text: improvementTexts[minIndex],
                     show: true
                 });
