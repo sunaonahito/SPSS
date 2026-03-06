@@ -456,41 +456,6 @@ function App() {
     );
   };
 
-  const downloadCSV = () => {
-    // BOM for Excel
-    const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-
-    // Headers
-    let csvContent = "Category,Text,Is Lost,Reason for Importance,Recipient,Final Message\n";
-
-    // Data
-    cards.forEach(card => {
-      // Find reason if it exists (stage 2 shareText for this card)
-      // Note: we only store one shareText currently in the state (for the chosen card in stage 2).
-      // Assuming card.description is where it's stored conceptually, or we just map it.
-      // Easiest is to add description to Card type if we haven't, or just output what we know.
-      // Wait, let's look at the card definition... I see `c.description` was checked earlier. Let's assume Card has `description?: string`.
-      const row = [
-        CATEGORY_LABELS[card.category] || card.category,
-        `"${card.text.replace(/"/g, '""')}"`,
-        card.isLost ? "Yes" : "No",
-        card.description ? `"${card.description.replace(/"/g, '""')}"` : "",
-        `"${recipientName.replace(/"/g, '""')}"`,
-        `"${finalMessage.replace(/"/g, '""')}"`
-      ].join(",");
-      csvContent += row + "\n";
-    });
-
-    const blob = new Blob([bom, csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "dod_experience_data.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   const renderThanks = () => (
     <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center' }}>
       <h1 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>ご体験ありがとうございました</h1>
@@ -498,15 +463,6 @@ function App() {
         「Dice of Destiny」をご体験いただいたことに感謝します。<br />
         この体験が、あなたの日常をより豊かにするきっかけになれば幸いです。
       </p>
-      <div style={{ marginTop: '3rem' }}>
-        <button
-          className="next-button"
-          onClick={downloadCSV}
-          style={{ fontSize: '1.2rem', padding: '1rem 2rem', background: '#4CAF50' }}
-        >
-          データをダウンロード (CSV)
-        </button>
-      </div>
     </div>
   );
 
