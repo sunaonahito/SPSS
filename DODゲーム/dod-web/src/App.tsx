@@ -58,7 +58,7 @@ function App() {
   const [cardsToLose, setCardsToLose] = useState(0);
 
   // 背景画像のパス
-  const bgImage = "url('/assets/背景.png')";
+  const bgImage = `url('${import.meta.env.BASE_URL}assets/fantasy_bg.jpg')`;
 
   // --- ハンドラー ---
   const addCard = () => {
@@ -206,7 +206,7 @@ function App() {
             次へ
           </button>
         </div>
-        <img src="/assets/図1.png" className="character-image" alt="Master" />
+        <img src={`${import.meta.env.BASE_URL}assets/図1.png`} className="character-image" alt="Master" />
       </div>
     );
   };
@@ -451,7 +451,7 @@ function App() {
             {phase === 'ending1' ? 'Special Stageへ' : '次へ'}
           </button>
         </div>
-        <img src={phase === 'ending1' ? "/assets/Master1 2.png" : "/assets/Master2.png"} className="character-image" alt="Character" />
+        <img src={phase === 'ending1' ? `${import.meta.env.BASE_URL}assets/Master1 2.png` : `${import.meta.env.BASE_URL}assets/Master2.png`} className="character-image" alt="Character" />
       </div>
     );
   };
@@ -511,7 +511,7 @@ function App() {
             <button className="next-button" onClick={() => setPhase('ending2')}>最後へ</button>
           </div>
         </div>
-        <img src="/assets/Master1 2.png" style={{ position: 'absolute', bottom: 0, right: 0, height: '40%', opacity: 0.3 }} alt="Bg" />
+        <img src={`${import.meta.env.BASE_URL}assets/Master1 2.png`} style={{ position: 'absolute', bottom: 0, right: 0, height: '40%', opacity: 0.3 }} alt="Bg" />
       </div>
     );
   };
