@@ -146,6 +146,13 @@ function App() {
     }
   }, [cardsToLose, phase, cards]);
 
+  // フェーズが変わるたびにスクロールを一番上に戻す
+  useEffect(() => {
+    const contentEl = document.querySelector('.content');
+    if (contentEl) {
+      contentEl.scrollTop = 0;
+    }
+  }, [phase]);
 
   // --- レンダーコンポーネント ---
 
@@ -226,7 +233,7 @@ function App() {
     }
 
     return (
-      <div className="story-screen">
+      <div className="story-screen" style={{ alignItems: 'flex-start', paddingTop: '8rem' }}>
         <div className="story-text">
           {text.map((line, i) => <p key={i}>{line}</p>)}
           <button
@@ -240,7 +247,7 @@ function App() {
             次へ
           </button>
         </div>
-        <img src={`${import.meta.env.BASE_URL}assets/図1.png`} className="character-image" alt="Master" />
+        <img src={`${import.meta.env.BASE_URL}assets/図1.png`} className="character-image" style={{ opacity: 0.5, WebkitMaskImage: 'radial-gradient(circle, black 30%, transparent 70%)', maskImage: 'radial-gradient(circle, black 30%, transparent 70%)', alignSelf: 'center' }} alt="Master" />
       </div>
     );
   };
@@ -267,7 +274,7 @@ function App() {
         <p>現在の枚数: {cards.length} / 25</p>
         {cards.length >= 5 && (
           <div style={{ marginTop: '0.5rem' }}>
-            <button className="next-button" onClick={() => setPhase('stage2')}>2nd Stageへ進む</button>
+            <button className="next-button" style={{ fontSize: '1.4rem', padding: '1.2rem 3rem', borderRadius: '50px', background: 'rgba(138, 43, 226, 0.6)', border: '2px solid white' }} onClick={() => setPhase('stage2')}>2nd Stageへ進む</button>
           </div>
         )}
       </div>
@@ -321,6 +328,7 @@ function App() {
           <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.1)', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', lineHeight: '1.6', fontSize: '0.95rem' }}>
             <p><strong>ミッション:</strong> カードの背景にあるストーリーを書いてください。</p>
             <p><strong>ゴール:</strong> 秘められたストーリーを書き上げる。</p>
+            <p style={{ marginTop: '1rem' }}><strong>所要時間:</strong> 5-10分</p>
             <p style={{ marginTop: '1rem' }}>少なくとも１枚のカードを選択し、なぜそれが大切なのかを伝えるストーリーを書いてください。<br />誰かに話して聞かせるように書いてみましょう。</p>
             <div style={{ marginTop: '1rem', background: 'rgba(0,0,0,0.3)', padding: '0.8rem', borderRadius: '4px', textAlign: 'left', display: 'inline-block' }}>
               <p style={{ margin: 0, fontSize: '0.85rem', color: '#ccc' }}>例: 「場所　リビングルーム」<br />この場所は私が家族と過ごしたリビングルームです。いつもみんなで集まって、たくさんの思い出があります。私の母が……</p>
@@ -328,7 +336,7 @@ function App() {
           </div>
           {activeCards.some(c => c.description) ? (
             <div style={{ marginTop: '0.5rem' }}>
-              <button className="next-button" onClick={() => setPhase('stage3')}>3rd Stageへ進む</button>
+              <button className="next-button" style={{ fontSize: '1.4rem', padding: '1.2rem 3rem', borderRadius: '50px', background: 'rgba(138, 43, 226, 0.6)', border: '2px solid white' }} onClick={() => setPhase('stage3')}>3rd Stageへ進む</button>
             </div>
           ) : (
             <p style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '0.5rem' }}>※ 最低1つのカードの物語を保存すると次へ進めます</p>
@@ -392,7 +400,8 @@ function App() {
           <h2>Stage 3</h2>
           <h3 style={{ margin: '0.5rem 0' }}>Roll the Dice of Destiny<br />【運命のダイス】</h3>
           <p>運命のダイスを振るたびに、あなたの大切なものを手放さなければなりません。</p>
-          <p style={{ fontSize: '0.9rem', opacity: 0.7 }}>※モード（難易度）を選択して喪失する枚数を調整しましょう</p>
+          <p style={{ marginTop: '0.5rem', fontWeight: 'bold' }}>所要時間: 5-10分</p>
+          <p style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '0.5rem' }}>※モード（難易度）を選択して喪失する枚数を調整しましょう</p>
           <div className="stats">
             <span>残りカード: {cards.filter(c => !c.isLost).length}枚</span>
             <span>ダイスを振った回数: {diceRolls} / 最低4回</span>
@@ -500,7 +509,7 @@ function App() {
     }
 
     return (
-      <div className="story-screen">
+      <div className="story-screen" style={{ alignItems: 'flex-start', paddingTop: '8rem' }}>
         <div className="story-text">
           {text.map((line, i) => <p key={i}>{line}</p>)}
           <button
@@ -510,10 +519,10 @@ function App() {
               else setPhase('thanks');
             }}
           >
-            {phase === 'ending1' ? 'Special Stageへ' : '次へ'}
+            {phase === 'ending2' ? '体験を完了する' : '次へ'}
           </button>
         </div>
-        <img src={phase === 'ending1' ? `${import.meta.env.BASE_URL}assets/Master1 2.png` : `${import.meta.env.BASE_URL}assets/Master2.png`} className="character-image" style={{ opacity: 0.5, WebkitMaskImage: 'radial-gradient(circle, black 30%, transparent 70%)', maskImage: 'radial-gradient(circle, black 30%, transparent 70%)' }} alt="Character" />
+        <img src={phase === 'ending1' ? `${import.meta.env.BASE_URL}assets/Master1 2.png` : `${import.meta.env.BASE_URL}assets/Master2.png`} className="character-image" style={{ opacity: 0.5, WebkitMaskImage: 'radial-gradient(circle, black 30%, transparent 70%)', maskImage: 'radial-gradient(circle, black 30%, transparent 70%)', alignSelf: 'center' }} alt="Character" />
       </div>
     );
   };
