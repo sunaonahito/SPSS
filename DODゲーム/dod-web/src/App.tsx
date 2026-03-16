@@ -3,7 +3,7 @@ import './App.css';
 
 // 型定義
 type Phase =
-  | 'title'
+  | 'title' | 'warning'
   | 'opening1' | 'opening2' | 'opening3'
   | 'stage1' | 'stage2' | 'stage3' | 'stage3_rolling' | 'stage3_losing'
   | 'ending1' | 'ending2' | 'special' | 'thanks';
@@ -156,8 +156,8 @@ function App() {
       <p style={{ fontSize: '1.5rem', marginBottom: '1.5rem', opacity: 0.9 }}>準備ができたら始めましょう</p>
       <button
         className="next-button"
-        style={{ fontSize: '2rem', padding: '1.5rem 4rem', borderRadius: '50px', background: 'rgba(138, 43, 226, 0.6)', border: '2px solid white' }}
-        onClick={() => setPhase('opening1')}
+        style={{ fontSize: '1.4rem', padding: '1.2rem 3rem', borderRadius: '50px', background: 'rgba(138, 43, 226, 0.6)', border: '2px solid white' }}
+        onClick={() => setPhase('warning')}
       >
         体験を始める
       </button>
@@ -168,26 +168,60 @@ function App() {
     </div>
   );
 
+  const renderWarning = () => (
+    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', backgroundColor: 'rgba(0,0,0,0.85)', padding: '2rem' }}>
+      <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem', color: '#fff' }}>注意事項</h2>
+      <div style={{ fontSize: '1.1rem', lineHeight: '2.2', textAlign: 'left', maxWidth: '800px', margin: '0 auto', background: 'rgba(255,255,255,0.1)', padding: '2rem', borderRadius: '15px', color: '#fff' }}>
+        <h3 style={{ borderBottom: '1px solid #fff', paddingBottom: '0.5rem', marginBottom: '1rem', color: '#fff' }}>この体験について</h3>
+        <ul style={{ listStyleType: 'disc', paddingLeft: '2rem', marginBottom: '1.5rem', color: '#fff' }}>
+          <li>これはゲームです。プレイ中の体験は現実とは異なります。</li>
+          <li>このゲームへの参加および中止は、完全にあなたの自由です。</li>
+          <li>ゲームへの参加やその結果が、個人の評価に影響することはありません。</li>
+          <li>プレイ中に気分を害した場合は、すぐにゲームを中止することができます。</li>
+          <li>誰もあなたにゲームへの参加や継続を強制することはできません。</li>
+        </ul>
+        <p style={{ fontWeight: 'bold', fontSize: '1.2rem', textAlign: 'center', marginTop: '2rem', color: '#fff' }}>
+          所要時間: 約30分<br />
+          <span style={{ fontSize: '1rem', fontWeight: 'normal', color: '#fff' }}>時間に余裕を持って体験してください。</span>
+        </p>
+      </div>
+      <button
+        className="next-button"
+        style={{ marginTop: '3rem', fontSize: '1.2rem', padding: '1rem 3rem' }}
+        onClick={() => setPhase('opening1')}
+      >
+        理解して体験を開始する
+      </button>
+    </div>
+  );
+
   const renderOpening = () => {
     let text: string[] = [];
     if (phase === 'opening1') {
       text = [
-        "あなたは突然、目の前が真っ暗になった。",
-        "目を開けると見たこともない景色だった。奇抜な衣装を身に纏った子どもが視界に入った。",
-        "「君の心に話しかけているよ。君はふりょのできごとに見舞われた。もしかしたら、これまでと同じような生活はできないかもしれない。君の大切な物事が全て失われてしまうほどのアクシデントなんだ。」"
+        "突然、あなたの周りのすべてが暗闇に包まれます。",
+        "目を開けると、あなたは奇妙で見知らぬ世界にいました。",
+        "目の前には、奇抜でカラフルな衣装を着た子供が立っています。目が合うと、その子供はあなたに語りかけてきました。",
+        "「君の心に話しかけているよ。君は予期せぬ不幸に見舞われたんだ。人生はもう二度と元には戻らないかもしれない。この事故はあまりにも大きく、君が大切にしているすべてを失ってしまうかもしれないんだ。」",
+        "あなたは何が起きているのか理解できず、困惑して見つめ返します……"
       ];
     } else if (phase === 'opening2') {
       text = [
-        "「『何を言ってるんだ』と思うのもムリもないよね。でも、信じてほしい。これからけいけんすることは、現実の君の人生にかかわることなんだ。」",
-        "「そして君らには『（ダイス・オブ・ディスティニー）』を使う機会が与えられる。」",
-        "「いちばんだいじなことだから忘れずにおぼえておいてね。このダイスを投げることで君らの大切な物事を失わずにすむかもしれないんだ。それどころか、君らの人生が今よりもっとよい状態になるかもしれないんだよ。」"
+        "「『一体何を言っているんだ？』と思っているだろうね。それは当然だ。でも、お願いだ、僕を信じて。君がこれから体験することは、君の人生と深くつながっているんだ。」",
+        "あなたがその言葉を処理する間もなく、さらなる驚きが訪れます。",
+        "「この不幸に直面したのは君だけじゃない。他の人たちもそうだ。そして、君たちはチャンスを与えられたんだ――運命のサイコロ『ダイス・オブ・ディスティニー』と呼ばれるものを使うチャンスをね。」",
+        "子供は身を乗り出し、その重要性を強調するかのように声を潜めました。",
+        "「これは一番大事なことだから、忘れないで。このサイコロを使うことで、君は最も大切なものに気がつくかもしれない。それだけじゃない、今よりももっと良い人生へと導かれるかもしれないんだ。」"
       ];
     } else if (phase === 'opening3') {
       text = [
-        "「君は『詳しく説明して欲しい』と思うだろうけど、ゆっくりせつめいしている時間はないんだ。そろそろ始まるから。」",
-        "「きいてくれてありがとう。これから大切な物事をカードにするんだ。できるだけ多くね。」",
-        "「あ！ マスターの指示はかならずまもってね。かってに行動してはいけないよ。君らの人生が、よりよいものになることを願っているよ。」",
-        "そう言い残して子どもは視界から消えていった—"
+        "あなたがもっと明確な説明を求めようとしたその時……",
+        "「詳しく説明してほしいのはわかるよ」と子供は遮ります。「でも時間がないんだ。もう始まるよ。」",
+        "あなたは不安を感じつつも、この子供が真面目に話していることを理解します。",
+        "「聞いてくれてありがとう」と子供は続けます。「さあ、君にとって最も大切なものをカードに書き出すんだよ。できるだけたくさんね。そして、他の人たちと同じように、運命のサイコロを振るんだ。」",
+        "子供は突然、警告するかのようにあなたに顔を近づけて言いました。",
+        "「覚えておいて――マスターの指示には必ず従うこと。勝手な行動はしちゃいけないよ。君の人生がこれによって良くなることを、心から願っているよ。」",
+        "その言葉を最後に、子供はあなたの視界から消えていきました――現れたときと同じように。"
       ];
     }
 
@@ -214,8 +248,22 @@ function App() {
   const renderStage1 = () => (
     <div className="stage-container">
       <div className="header">
-        <h2>1st Stage: 大切なカードの作成</h2>
-        <p>あなたの人生で大切な物・人・場所・出来事・目標などを、最低5枚のカードにしてください。</p>
+        <h2>Stage1</h2>
+        <h3 style={{ margin: '0.5rem 0' }}>Creating Precious Thing Cards<br />【大切なものカード】</h3>
+        <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.1)', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', lineHeight: '1.6', fontSize: '0.95rem' }}>
+          <p><strong>ミッション:</strong> あなたにとって大切なものを挙げてください。</p>
+          <p><strong>ゴール:</strong> 本当に大切なものが書かれたカードを５枚以上作成してください。<br/>各テーマの下に配置された空欄に入力するとカードが完成します。</p>
+          <p style={{ marginTop: '1rem' }}><strong>所要時間:</strong> 5-10分</p>
+          <p style={{ marginTop: '1rem', fontWeight: 'bold' }}>ヒントとなる質問:</p>
+          <div style={{ paddingLeft: '0', marginBottom: '1rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+            <div>振り返ってみて、大切だと感じる場所はありますか？それはどこですか？</div>
+            <div>あなたの人生で最も大切な人は誰ですか？</div>
+            <div>過去の忘れられない出来事は何ですか？</div>
+            <div>あなたが大切にしているものは何ですか？</div>
+            <div>あなたにとって意味のある目標は何ですか？</div>
+          </div>
+          <p style={{ color: '#ffffff', fontWeight: 'bold' }}>正解や不正解はありません。思いついたことをそのまま書いてください。</p>
+        </div>
         <p>現在の枚数: {cards.length} / 25</p>
         {cards.length >= 5 && (
           <div style={{ marginTop: '0.5rem' }}>
@@ -268,8 +316,16 @@ function App() {
     return (
       <div className="stage-container">
         <div className="header">
-          <h2>2nd Stage: 大切なカードの物語</h2>
-          <p>作成したカードから1つ選び、なぜ大切なのかを手紙形式で説明しましょう。</p>
+          <h2>Stage 2</h2>
+          <h3 style={{ margin: '0.5rem 0' }}>Writing Stories<br />【秘められた物語】</h3>
+          <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.1)', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', lineHeight: '1.6', fontSize: '0.95rem' }}>
+            <p><strong>ミッション:</strong> カードの背景にあるストーリーを書いてください。</p>
+            <p><strong>ゴール:</strong> 秘められたストーリーを書き上げる。</p>
+            <p style={{ marginTop: '1rem' }}>少なくとも１枚のカードを選択し、なぜそれが大切なのかを伝えるストーリーを書いてください。<br />誰かに話して聞かせるように書いてみましょう。</p>
+            <div style={{ marginTop: '1rem', background: 'rgba(0,0,0,0.3)', padding: '0.8rem', borderRadius: '4px', textAlign: 'left', display: 'inline-block' }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: '#ccc' }}>例: 「場所　リビングルーム」<br />この場所は私が家族と過ごしたリビングルームです。いつもみんなで集まって、たくさんの思い出があります。私の母が……</p>
+            </div>
+          </div>
           {activeCards.some(c => c.description) ? (
             <div style={{ marginTop: '0.5rem' }}>
               <button className="next-button" onClick={() => setPhase('stage3')}>3rd Stageへ進む</button>
@@ -333,7 +389,8 @@ function App() {
     return (
       <div className="stage-container">
         <div className="header">
-          <h2>3rd Stage: 大切なカードの喪失</h2>
+          <h2>Stage 3</h2>
+          <h3 style={{ margin: '0.5rem 0' }}>Roll the Dice of Destiny<br />【運命のダイス】</h3>
           <p>運命のダイスを振るたびに、あなたの大切なものを手放さなければなりません。</p>
           <p style={{ fontSize: '0.9rem', opacity: 0.7 }}>※モード（難易度）を選択して喪失する枚数を調整しましょう</p>
           <div className="stats">
@@ -425,14 +482,19 @@ function App() {
         "「やあ！ 『運命のサイコロ』を使ってみたんだね？」",
         "子供は再び話しかけてきました。",
         "「どのカードが残って、どのカードを失ったの？」",
-        "失われたカードを見つめながら、子供は尋ねました。",
-        "「この体験は、君にとってどんな意味があった？」"
+        "失われたカードを見つめながら、子供は尋ねました。「この体験は、君にとってどんな意味があった？」",
+        "――どんな意味があっただろう？ あなたは考え込みます。",
+        "「そうだ！ 現実の世界に戻る前に、君の大切な人（家族、パートナー、友人など）へ、この体験を通じて感じたことや考えたことをメッセージにしてみない？」"
       ];
     } else if (phase === 'ending2') {
       text = [
-        "すべてのダイスを振り終えて、あなたはゆっくりと目を閉じた。すると、マスターの声が聞こえてきた",
-        "「人生で手にするすべてのものは、いつか失われる日が来る。誰もが、例外なく、死を迎える時が来るのだ。」",
+        "すべてのサイコロを振り終え、あなたはゆっくりと目を閉じます。",
+        "すると、マスターの声が聞こえてきます。",
+        "「人生で手にするすべてのものは、いつか失われる日が来る。誰しも、例外なく、死を迎える時が来るのだ。」",
+        "さらに、声は続きます。",
         "「だが、今この瞬間、お前は生きている。そして、お前が大切に思うものは、お前と共にあるのだ。」",
+        "マスターの声が聞こえなくなり、再び目を開けると、あなたは以前と同じ場所にいました。",
+        "あなたは不思議な体験をしたことに気づきます――運命によって最も大切なものが失われるという体験を。",
         "あなたは深く息を吸い込みます。心は穏やかです。そして、人生が以前よりも少し明るく感じられるのです。"
       ];
     }
@@ -451,7 +513,7 @@ function App() {
             {phase === 'ending1' ? 'Special Stageへ' : '次へ'}
           </button>
         </div>
-        <img src={phase === 'ending1' ? `${import.meta.env.BASE_URL}assets/Master1 2.png` : `${import.meta.env.BASE_URL}assets/Master2.png`} className="character-image" alt="Character" />
+        <img src={phase === 'ending1' ? `${import.meta.env.BASE_URL}assets/Master1 2.png` : `${import.meta.env.BASE_URL}assets/Master2.png`} className="character-image" style={{ opacity: 0.5, WebkitMaskImage: 'radial-gradient(circle, black 30%, transparent 70%)', maskImage: 'radial-gradient(circle, black 30%, transparent 70%)' }} alt="Character" />
       </div>
     );
   };
@@ -470,8 +532,9 @@ function App() {
     return (
       <div className="stage-container">
         <div className="header">
-          <h2>Special Stage: 大切な人へのメッセージ</h2>
-          <p>体験を通じて感じたことを、大切な人へのメッセージとして書いてみましょう。</p>
+          <h2>Special Stage</h2>
+          <h3 style={{ margin: '0.5rem 0' }}>【あの人への手紙】</h3>
+          <p>大切な人（家族、パートナー、友人など）へ、この体験を通じて感じたことや考えたことをメッセージにしてみましょう</p>
         </div>
 
         <div style={{ display: 'flex', gap: '2rem' }}>
@@ -498,20 +561,19 @@ function App() {
           <div style={{ flex: 1 }} className="share-area">
             <input
               type="text"
-              placeholder="メッセージを届けたい人の名前や関係.."
+              placeholder="大切な人の名前や関係.."
               value={recipientName}
               onChange={(e) => setRecipientName(e.target.value)}
               style={{ padding: '1rem', fontSize: '1rem', borderRadius: '4px', border: 'none', background: '#f5f5f0', color: '#000', width: '100%', boxSizing: 'border-box' }}
             />
             <textarea
-              placeholder="大切な人を想い、メッセージを記します..."
+              placeholder="大切な人を想い、ここにメッセージを記します..."
               value={finalMessage}
               onChange={(e) => setFinalMessage(e.target.value)}
             />
-            <button className="next-button" onClick={() => setPhase('ending2')}>最後へ</button>
+            <button className="next-button" onClick={() => setPhase('ending2')}>次へ</button>
           </div>
         </div>
-        <img src={`${import.meta.env.BASE_URL}assets/Master1 2.png`} style={{ position: 'absolute', bottom: 0, right: 0, height: '40%', opacity: 0.3 }} alt="Bg" />
       </div>
     );
   };
@@ -521,6 +583,7 @@ function App() {
       <div className={`overlay ${phase === 'title' ? 'title-mode' : ''}`}></div>
       <div className="content">
         {phase === 'title' && renderTitle()}
+        {phase === 'warning' && renderWarning()}
         {phase.startsWith('opening') && renderOpening()}
         {phase === 'stage1' && renderStage1()}
         {phase === 'stage2' && renderStage2()}
