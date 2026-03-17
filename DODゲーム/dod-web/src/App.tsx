@@ -533,19 +533,28 @@ function App() {
   };
 
   const renderThanks = () => (
-    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', letterSpacing: '0.1rem', fontFamily: '"Times New Roman", Times, serif', fontWeight: 'bold' }}>THE DICE OF DESTINY</h1>
-      <p style={{ fontSize: '1.2rem', lineHeight: '2', opacity: 0.9 }}>
-        この体験が、<br />
-        あなたの健康と幸福の支えとなり、<br />
-        より充実した人生を送る一助となることを願っています。<br />
-        いつかまた、<br />
-        ご一緒できることを楽しみにしています。<br />
-        本当にありがとうございました。
-      </p>
+    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', justifyContent: 'center', padding: '2rem' }}>
+      <div style={{ 
+        background: 'rgba(0, 0, 0, 0.7)', 
+        padding: '3rem', 
+        borderRadius: '20px', 
+        boxShadow: '0 0 30px rgba(0,0,0,0.5)',
+        maxWidth: '800px',
+        margin: '0 auto'
+      }}>
+        <h1 style={{ fontSize: '3rem', marginBottom: '2rem', letterSpacing: '0.2rem', fontFamily: '"Times New Roman", Times, serif', fontWeight: 'bold', color: '#fff' }}>THE DICE OF DESTINY</h1>
+        <p style={{ fontSize: '1.3rem', lineHeight: '2.2', opacity: 1, color: '#fff' }}>
+          この体験が、<br />
+          あなたの健康と幸福の支えとなり、<br />
+          より充実した人生を送る一助となることを願っています。<br />
+          いつかまた、<br />
+          ご一緒できることを楽しみにしています。<br />
+          本当にありがとうございました。
+        </p>
+      </div>
       <button
         className="next-button"
-        style={{ marginTop: '3rem', fontSize: '1.2rem', padding: '1rem 3rem' }}
+        style={{ marginTop: '3rem', fontSize: '1.2rem', padding: '1rem 3rem', borderRadius: '50px' }}
         onClick={() => {
           setPhase('title');
           setCards([]);
