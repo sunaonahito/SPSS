@@ -35,7 +35,7 @@ const CATEGORY_EXAMPLES: Record<CardCategory, string> = {
 };
 
 const CATEGORY_HINTS: Record<CardCategory, string> = {
-  green: 'あなたが大切にしているものは何ですか？',
+  green: 'あなたが大切にしている\nものは何ですか？',
   pink: 'あなたの人生で\n最も大切な人は誰ですか？',
   blue: '大切だと感じる場所はありますか？\nそれはどこですか？',
   yellow: 'あなたにとって\n忘れられない出来事は何ですか？',
