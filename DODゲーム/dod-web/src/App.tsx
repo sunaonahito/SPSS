@@ -157,10 +157,9 @@ function App() {
   // --- レンダーコンポーネント ---
 
   const renderTitle = () => (
-    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center' }}>
-      <h1 style={{ fontSize: '4rem', marginBottom: '1rem', letterSpacing: '0.2rem' }}>The Dice of Destiny</h1>
+    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
+      <h1 style={{ fontSize: '4rem', marginBottom: '1rem', letterSpacing: '0.2rem', fontFamily: '"Times New Roman", Times, serif', fontWeight: 'bold' }}>THE DICE OF DESTINY</h1>
       <p style={{ fontSize: '1.2rem', marginBottom: '3rem', opacity: 0.8 }}>The Educational Effects of Games about Loss: Focusing on well-being</p>
-      <p style={{ fontSize: '1.5rem', marginBottom: '1.5rem', opacity: 0.9 }}>準備ができたら始めましょう</p>
       <button
         className="next-button"
         style={{ fontSize: '1.4rem', padding: '1.2rem 3rem', borderRadius: '50px', background: 'rgba(138, 43, 226, 0.6)', border: '2px solid white' }}
@@ -176,7 +175,7 @@ function App() {
   );
 
   const renderWarning = () => (
-    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', backgroundColor: 'rgba(0,0,0,0.85)', padding: '2rem' }}>
+    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', padding: '2rem' }}>
       <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem', color: '#fff' }}>注意事項</h2>
       <div style={{ fontSize: '1.1rem', lineHeight: '2.2', textAlign: 'left', maxWidth: '800px', margin: '0 auto', background: 'rgba(255,255,255,0.1)', padding: '2rem', borderRadius: '15px', color: '#fff' }}>
         <h3 style={{ borderBottom: '1px solid #fff', paddingBottom: '0.5rem', marginBottom: '1rem', color: '#fff' }}>この体験について</h3>
@@ -402,9 +401,9 @@ function App() {
           <p>運命のダイスを振るたびに、あなたの大切なものを手放さなければなりません。</p>
           <p style={{ marginTop: '0.5rem', fontWeight: 'bold' }}>所要時間: 5-10分</p>
           <p style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '0.5rem' }}>※モード（難易度）を選択して喪失する枚数を調整しましょう</p>
-          <div className="stats">
+          <div className="stats" style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
             <span>残りカード: {cards.filter(c => !c.isLost).length}枚</span>
-            <span>ダイスを振った回数: {diceRolls} / 最低4回</span>
+            <span>ダイス使用回数: {diceRolls} / 最低4回</span>
           </div>
         </div>
 
@@ -512,6 +511,12 @@ function App() {
       <div className="story-screen" style={{ alignItems: 'flex-start', paddingTop: '8rem' }}>
         <div className="story-text">
           {text.map((line, i) => <p key={i}>{line}</p>)}
+          {phase === 'ending1' && (
+            <div style={{ marginTop: '1.5rem', padding: '1rem', background: 'rgba(255,255,255,0.1)', borderRadius: '8px', display: 'flex', gap: '2rem', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 'bold' }}>
+              <span>🃏 手元に残ったカード: <strong>{cards.filter(c => !c.isLost).length}枚</strong></span>
+              <span>💔 失ったカード: <strong>{cards.filter(c => c.isLost).length}枚</strong></span>
+            </div>
+          )}
           <button
             className="next-button"
             onClick={() => {
@@ -528,12 +533,34 @@ function App() {
   };
 
   const renderThanks = () => (
-    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>ご体験ありがとうございました</h1>
+    <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
+      <h1 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', letterSpacing: '0.1rem', fontFamily: '"Times New Roman", Times, serif', fontWeight: 'bold' }}>THE DICE OF DESTINY</h1>
       <p style={{ fontSize: '1.2rem', lineHeight: '2', opacity: 0.9 }}>
-        「Dice of Destiny」をご体験いただいたことに感謝します。<br />
-        この体験が、あなたの日常をより豊かにするきっかけになれば幸いです。
+        この体験が、<br />
+        あなたの健康と幸福の支えとなり、<br />
+        より充実した人生を送る一助となることを願っています。<br />
+        いつかまた、<br />
+        ご一緒できることを楽しみにしています。<br />
+        本当にありがとうございました。
       </p>
+      <button
+        className="next-button"
+        style={{ marginTop: '3rem', fontSize: '1.2rem', padding: '1rem 3rem' }}
+        onClick={() => {
+          setPhase('title');
+          setCards([]);
+          setInputText('');
+          setSelectedCardId(null);
+          setShareText('');
+          setDiceRolls(0);
+          setCurrentDice(1);
+          setCardsToLose(0);
+          setRecipientName('');
+          setFinalMessage('');
+        }}
+      >
+        タイトル画面へ
+      </button>
     </div>
   );
 
@@ -548,7 +575,7 @@ function App() {
 
         <div style={{ display: 'flex', gap: '2rem' }}>
           <div style={{ flex: 1 }}>
-            <h3>手元に残ったカード</h3>
+            <h3>手元に残ったカード（{cards.filter(c => !c.isLost).length}枚）</h3>
             <div className="cards-grid" style={{ zoom: 0.8 }}>
               {cards.filter(c => !c.isLost).map(c => (
                 <div key={c.id} className={`card ${c.category}`}>
@@ -557,7 +584,7 @@ function App() {
               ))}
             </div>
 
-            <h3 style={{ marginTop: '2rem' }}>あなたが失ったカード</h3>
+            <h3 style={{ marginTop: '2rem' }}>あなたが失ったカード（{cards.filter(c => c.isLost).length}枚）</h3>
             <div className="cards-grid" style={{ zoom: 0.8 }}>
               {cards.filter(c => c.isLost).map(c => (
                 <div key={c.id} className={`card ${c.category} lost-no-label`}>
