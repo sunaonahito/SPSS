@@ -260,14 +260,6 @@ function App() {
           <p><strong>ミッション:</strong> あなたにとって大切なものを挙げてください。</p>
           <p><strong>ゴール:</strong> 本当に大切なものが書かれたカードを５枚以上作成してください。<br/>各テーマの下に配置された空欄に入力するとカードが完成します。</p>
           <p style={{ marginTop: '1rem' }}><strong>所要時間:</strong> 5-10分</p>
-          <p style={{ marginTop: '1rem', fontWeight: 'bold' }}>ヒントとなる質問:</p>
-          <div style={{ paddingLeft: '0', marginBottom: '1rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-            <div>振り返ってみて、大切だと感じる場所はありますか？それはどこですか？</div>
-            <div>あなたの人生で最も大切な人は誰ですか？</div>
-            <div>過去の忘れられない出来事は何ですか？</div>
-            <div>あなたが大切にしているものは何ですか？</div>
-            <div>あなたにとって意味のある目標は何ですか？</div>
-          </div>
           <p style={{ color: '#ffffff', fontWeight: 'bold' }}>正解や不正解はありません。思いついたことをそのまま書いてください。</p>
         </div>
         <p>現在の枚数: {cards.length} / 25</p>
