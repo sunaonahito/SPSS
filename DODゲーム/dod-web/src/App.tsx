@@ -34,6 +34,14 @@ const CATEGORY_EXAMPLES: Record<CardCategory, string> = {
   purple: '就職, 結婚など'
 };
 
+const CATEGORY_HINTS: Record<CardCategory, string> = {
+  green: 'あなたが大切にしているものは何ですか？',
+  pink: 'あなたの人生で\n最も大切な人は誰ですか？',
+  blue: '大切だと感じる場所はありますか？\nそれはどこですか？',
+  yellow: 'あなたにとって\n忘れられない出来事は何ですか？',
+  purple: 'あなたにとって\n意味のある目標は何ですか？'
+};
+
 function App() {
   const [phase, setPhase] = useState<Phase>('title');
 
@@ -276,6 +284,7 @@ function App() {
             key={cat}
             className={`category-btn ${cat} ${inputCategory === cat ? 'selected' : ''}`}
             onClick={() => setInputCategory(cat)}
+            data-hint={CATEGORY_HINTS[cat]}
           >
             <span className="category-btn-label">{CATEGORY_LABELS[cat]}</span>
             <span className="category-btn-example">{CATEGORY_EXAMPLES[cat]}</span>
