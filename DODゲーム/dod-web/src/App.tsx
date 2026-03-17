@@ -158,16 +158,16 @@ function App() {
 
   const renderTitle = () => (
     <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
-      <h1 style={{ fontSize: '4rem', marginBottom: '1rem', letterSpacing: '0.2rem', fontFamily: '"Times New Roman", Times, serif', fontWeight: 'bold' }}>THE DICE OF DESTINY</h1>
-      <p style={{ fontSize: '1.2rem', marginBottom: '3rem', opacity: 0.8 }}>The Educational Effects of Games about Loss: Focusing on well-being</p>
+      <h1 style={{ fontSize: '4rem', marginBottom: '1rem', letterSpacing: '0.2rem', fontFamily: '"Times New Roman", Times, serif', fontWeight: 'bold', textShadow: '2px 2px 10px rgba(0,0,0,0.8)' }}>THE DICE OF DESTINY</h1>
+      <p style={{ fontSize: '1.2rem', marginBottom: '3rem', opacity: 1, textShadow: '1px 1px 5px rgba(0,0,0,0.8)' }}>The Educational Effects of Games about Loss: Focusing on well-being</p>
       <button
         className="next-button"
-        style={{ fontSize: '1.4rem', padding: '1.2rem 3rem', borderRadius: '50px', background: 'rgba(138, 43, 226, 0.6)', border: '2px solid white' }}
+        style={{ fontSize: '1.4rem', padding: '1.2rem 3rem', borderRadius: '50px', background: 'rgba(138, 43, 226, 0.6)', border: '2px solid white', boxShadow: '0 4px 15px rgba(0,0,0,0.5)' }}
         onClick={() => setPhase('warning')}
       >
         体験を始める
       </button>
-      <div style={{ marginTop: '2rem', fontSize: '0.85rem', opacity: 0.6, textAlign: 'center', lineHeight: '2' }}>
+      <div style={{ marginTop: '2rem', fontSize: '0.85rem', opacity: 1, textAlign: 'center', lineHeight: '2', textShadow: '1px 1px 4px rgba(0,0,0,0.8)', fontWeight: 'bold' }}>
         このゲームは、喪失体験を通じた自己対話を目的としています。<br />
         ※ 参加と中止は完全に自由です。不快感を感じた場合はいつでも中止できます。
       </div>
