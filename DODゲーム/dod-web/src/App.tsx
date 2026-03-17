@@ -625,7 +625,7 @@ function App() {
 
   return (
     <div className="game-container" style={{ backgroundImage: bgImage }}>
-      <div className={`overlay ${phase === 'title' ? 'title-mode' : ''}`}></div>
+      <div className={`overlay ${(phase === 'title' || phase === 'thanks') ? 'title-mode' : ''}`}></div>
       <div className="content">
         {phase === 'title' && renderTitle()}
         {phase === 'warning' && renderWarning()}
