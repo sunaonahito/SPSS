@@ -514,8 +514,8 @@ function App() {
           {text.map((line, i) => <p key={i}>{line}</p>)}
           {phase === 'ending1' && (
             <div style={{ marginTop: '1.5rem', padding: '1rem', background: 'rgba(255,255,255,0.1)', borderRadius: '8px', display: 'flex', gap: '2rem', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 'bold' }}>
-              <span>🃏 手元に残ったカード: <strong>{cards.filter(c => !c.isLost).length}枚</strong></span>
-              <span>💔 失ったカード: <strong>{cards.filter(c => c.isLost).length}枚</strong></span>
+              <span>手元に残ったカード: <strong>{cards.filter(c => !c.isLost).length}枚</strong></span>
+              <span>失ったカード: <strong>{cards.filter(c => c.isLost).length}枚</strong></span>
             </div>
           )}
           <button
