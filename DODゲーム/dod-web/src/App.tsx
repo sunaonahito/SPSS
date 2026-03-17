@@ -534,6 +534,7 @@ function App() {
 
   const renderThanks = () => (
     <div className="story-screen" style={{ flexDirection: 'column', textAlign: 'center', justifyContent: 'center', padding: '2rem' }}>
+      <h1 style={{ fontSize: '3rem', marginBottom: '2.5rem', letterSpacing: '0.2rem', fontFamily: '"Times New Roman", Times, serif', fontWeight: 'bold', color: '#fff', textShadow: '2px 2px 10px rgba(0,0,0,0.8)' }}>THE DICE OF DESTINY</h1>
       <div style={{ 
         background: 'rgba(0, 0, 0, 0.7)', 
         padding: '3rem', 
@@ -542,7 +543,6 @@ function App() {
         maxWidth: '800px',
         margin: '0 auto'
       }}>
-        <h1 style={{ fontSize: '3rem', marginBottom: '2rem', letterSpacing: '0.2rem', fontFamily: '"Times New Roman", Times, serif', fontWeight: 'bold', color: '#fff' }}>THE DICE OF DESTINY</h1>
         <p style={{ fontSize: '1.3rem', lineHeight: '2.2', opacity: 1, color: '#fff' }}>
           この体験が、<br />
           あなたの健康と幸福の支えとなり、<br />
